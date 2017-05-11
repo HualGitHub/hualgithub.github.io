@@ -175,7 +175,132 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="RecycleView简单使用"><a href="#RecycleView简单使用" class="headerlink" title="RecycleView简单使用"></a>RecycleView简单使用</h2><blockquote>
+<p>RecycleView继承自ViewGroup，是一堆控件的集合。</p>
+</blockquote>
+<p>因为继承自ViewGroup，所以它提供一些类来实现布局:</p>
+<ul>
+<li>LayoutManager 布局管理器</li>
+<li>ViewHolder 控件容器</li>
+<li>Adapter 控件适配器</li>
+</ul>
+<h3 id="1-LayoutManager"><a href="#1-LayoutManager" class="headerlink" title="1.LayoutManager"></a>1.LayoutManager</h3><p>分位三种：</p>
+<h6 id="GridLayoutManager-网格布局管理器"><a href="#GridLayoutManager-网格布局管理器" class="headerlink" title="GridLayoutManager 网格布局管理器"></a>GridLayoutManager 网格布局管理器</h6><h6 id="LinearLayoutManager-线性布局管理器"><a href="#LinearLayoutManager-线性布局管理器" class="headerlink" title="LinearLayoutManager 线性布局管理器"></a>LinearLayoutManager 线性布局管理器</h6><h6 id="StaggeredGridLayoutManager-流式布局管理器"><a href="#StaggeredGridLayoutManager-流式布局管理器" class="headerlink" title="StaggeredGridLayoutManager 流式布局管理器"></a>StaggeredGridLayoutManager 流式布局管理器</h6><h3 id="2-ViewHolder"><a href="#2-ViewHolder" class="headerlink" title="2.ViewHolder"></a>2.ViewHolder</h3><p>主要靠继承RecycleView自带的Holder，实现构造方法，在自定义的Holder里面获取到布局里面的单个的控件</p>
+<pre><code>class MyHolder extends RecyclerView.ViewHolder{
+    TextView title_txt;
+    TextView content_txt;
+
+    public MyHolder(View itemView) {
+        super(itemView);
+        title_txt = (TextView) itemView.findViewById(R.id.title);
+        content_txt = (TextView) itemView.findViewById(R.id.content);
+    }
+}
+</code></pre><h3 id="3-Adapter"><a href="#3-Adapter" class="headerlink" title="3.Adapter"></a>3.Adapter</h3><p>自定义Adapter里面实现三个方法：</p>
+<ul>
+<li>onCreateViewHolder</li>
+</ul>
+<p>返回值为一个holder，可以根据不同条件返回不同的item的layout</p>
+<ul>
+<li>onBindViewHolder</li>
+</ul>
+<p>将数据展示在指定的position上面</p>
+<ul>
+<li>getItemCount</li>
+</ul>
+<p>返回adapter里面item的条数</p>
+<pre><code>class MyAdapter extends RecyclerView.Adapter{
+
+    private Context mContext;
+    private List&lt;CardModel&gt; mList;
+    public MyAdapter(Context context, List&lt;CardModel&gt; list){
+        this.mContext = context;
+        this.mList = list;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.card_item_layout, parent, false);
+        CardView cardView = (CardView) view.findViewById(R.id.card_view);
+        cardView.setCardBackgroundColor(Color.parseColor(&quot;#00FF00&quot;));
+        cardView.setCardElevation(20);
+        cardView.setContentPadding(20,20,20,20);
+        cardView.setRadius(10);
+
+        return new MyHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        ((MyHolder)holder).title_txt.setText(mList.get(position).getTitle());
+        ((MyHolder)holder).content_txt.setText(mList.get(position).getContent());
+    }
+
+    @Override
+    public int getItemCount() {
+        if(mList == null || mList.isEmpty())
+            return 0;
+        else
+            return mList.size();
+
+    }
+}
+</code></pre><p> 定义完Holder和Adapter之后，选择一种LayoutManager,给RecycleView设置adapter即可。</p>
+<pre><code>recycle_card = (RecyclerView) findViewById(R.id.recycle_card);
+// 添加内容
+List&lt;CardModel&gt; list = new ArrayList&lt;&gt;();
+for(int i=0;i&lt;10;i++) {
+    list.add(new CardModel(&quot;title&quot; + i, &quot;content&quot; + i));
+}
+myAdapter = new MyAdapter(this, list);
+// recycleView布局管理
+linearLayoutManager = new LinearLayoutManager(this);
+recycle_card.setLayoutManager(linearLayoutManager);
+recycle_card.setAdapter(myAdapter);
+</code></pre><p>下面是RecycleView的Item的布局 card_item_layout</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;&gt;
+
+    &lt;android.support.v7.widget.CardView
+        android:id=&quot;@+id/card_view&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_marginTop=&quot;10dp&quot;
+        android:layout_marginLeft=&quot;10dp&quot;
+        android:layout_marginRight=&quot;10dp&quot;
+        android:layout_marginBottom=&quot;10dp&quot;
+        &gt;
+        &lt;LinearLayout
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;50dp&quot;&gt;
+            &lt;ImageView
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:src=&quot;@mipmap/ic_launcher&quot;/&gt;
+
+            &lt;LinearLayout
+                android:layout_width=&quot;match_parent&quot;
+                android:layout_height=&quot;match_parent&quot;
+                android:orientation=&quot;vertical&quot;&gt;
+
+                &lt;TextView
+                    android:id=&quot;@+id/title&quot;
+                    android:layout_width=&quot;wrap_content&quot;
+                    android:layout_height=&quot;wrap_content&quot;
+                    android:text=&quot;@string/title&quot;/&gt;
+                &lt;TextView
+                    android:id=&quot;@+id/content&quot;
+                    android:layout_width=&quot;wrap_content&quot;
+                    android:layout_height=&quot;wrap_content&quot;
+                    android:text=&quot;@string/content&quot;/&gt;
+            &lt;/LinearLayout&gt;
+        &lt;/LinearLayout&gt;
+    &lt;/android.support.v7.widget.CardView&gt;
+&lt;/LinearLayout&gt;
+</code></pre><p>第一次写，自己也觉得很不详细，慢慢改善。</p>
+
       
 
       
@@ -183,6 +308,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5"><font face="Consoles" colors=#00FF00 size=3>Android RecycleView CardView</font></a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -292,6 +428,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5"><font face="Consoles" colors=#00FF00 size=3>Android RecycleView CardView</font></a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
