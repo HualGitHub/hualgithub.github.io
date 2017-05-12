@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://nba.hupu.com">
-  <title>Archives | H的博客</title>
+  <title>Hexo安装流程以及遇到的问题 | H的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="H的博客">
-<meta property="og:url" content="http://nba.hupu.com/archives/index.html">
+  <meta name="description" content="网上学习的Hexo+GitHub搭建私人博客。  前期准备工作：安装Node.js和Git客户端；申请GitHub账号；创建Hexo相对应的仓库。  下面为计算机上的操作（系统为Windows）：  在计算机创建Hexo目录 启动npm，进入创建的Hexo根目录，下载hexo   $ npm install -g hexo  初始化hexo   $ hexo init  生成项目(已生成查看文件变">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo安装流程以及遇到的问题">
+<meta property="og:url" content="http://nba.hupu.com/2017/05/12/Hexo安装流程以及遇到的问题/index.html">
 <meta property="og:site_name" content="H的博客">
+<meta property="og:description" content="网上学习的Hexo+GitHub搭建私人博客。  前期准备工作：安装Node.js和Git客户端；申请GitHub账号；创建Hexo相对应的仓库。  下面为计算机上的操作（系统为Windows）：  在计算机创建Hexo目录 启动npm，进入创建的Hexo根目录，下载hexo   $ npm install -g hexo  初始化hexo   $ hexo init  生成项目(已生成查看文件变">
+<meta property="og:updated_time" content="2017-05-12T06:50:34.774Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="H的博客">
+<meta name="twitter:title" content="Hexo安装流程以及遇到的问题">
+<meta name="twitter:description" content="网上学习的Hexo+GitHub搭建私人博客。  前期准备工作：安装Node.js和Git客户端；申请GitHub账号；创建Hexo相对应的仓库。  下面为计算机上的操作（系统为Windows）：  在计算机创建Hexo目录 启动npm，进入创建的Hexo根目录，下载hexo   $ npm install -g hexo  初始化hexo   $ hexo init  生成项目(已生成查看文件变">
   
     <link rel="alternative" href="/atom.xml" title="H的博客" type="application/atom+xml">
   
@@ -153,36 +158,67 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Hexo安装流程以及遇到的问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/12/Hexo安装流程以及遇到的问题/" class="archive-article-date">
-  	<time datetime="2017-05-12T06:32:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/12/Hexo安装流程以及遇到的问题/">Hexo安装流程以及遇到的问题</a>
+    <h1 class="article-title" itemprop="name">
+      Hexo安装流程以及遇到的问题
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/05/12/Hexo安装流程以及遇到的问题/" class="archive-article-date">
+  	<time datetime="2017-05-12T06:32:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网上学习的Hexo+GitHub搭建私人博客。</p>
+<blockquote>
+<p>前期准备工作：安装Node.js和Git客户端；申请GitHub账号；创建Hexo相对应的仓库。</p>
+</blockquote>
+<p>下面为计算机上的操作（系统为Windows）：</p>
+<ul>
+<li>在计算机创建Hexo目录</li>
+<li><p>启动npm，进入创建的Hexo根目录，下载hexo</p>
+<p>  $ npm install -g hexo</p>
+</li>
+<li><p>初始化hexo</p>
+<p>  $ hexo init</p>
+</li>
+<li><p>生成项目(已生成查看文件变动)</p>
+<p>  $ hexo g (hexo generate)</p>
+</li>
+<li><p>本机启动服务预览（成功后可以在本地浏览器查看效果<a href="http://localhost:4000/）" target="_blank" rel="external">http://localhost:4000/）</a></p>
+<p>  $ hexo s (hexo server)</p>
+</li>
+</ul>
+<hr>
+<p>上面的步骤完成后，如果本地浏览器能成功预览效果，接下来就是将本地已经生成的项目提交到github上面</p>
+<ul>
+<li><p>修改 Hexo 根目录下的 _config.yml文件 里面的deploy 字段</p>
+<p>  type: git</p>
+<p>  repository: <a href="https://github.com/你的GitHub地址/仓库名.github.io.git" target="_blank" rel="external">https://github.com/你的GitHub地址/仓库名.github.io.git</a></p>
+<p>  branch: master</p>
+</li>
+<li><p>部署项目</p>
+<p>  $ hexo d (hexo deploy)</p>
+</li>
+</ul>
+<p>提交成功后，可以登录github查看项目提交结果，也可以在浏览器输入github上的仓库名称，若成功提交，则会弹出hexo的一个hello world页面。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -194,57 +230,38 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/11/RecycleView初步使用/" class="archive-article-date">
-  	<time datetime="2017-05-11T03:36:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-11</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/11/RecycleView初步使用/">RecycleView初步使用</a>
-    </h1>
+  
+    <a href="/2017/05/11/RecycleView初步使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RecycleView初步使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5"><font face="Consoles" colors=#00FF00 size=3>Android RecycleView CardView</font></a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -267,8 +284,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

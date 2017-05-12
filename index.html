@@ -155,6 +155,97 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Hexo安装流程以及遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/12/Hexo安装流程以及遇到的问题/">Hexo安装流程以及遇到的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/12/Hexo安装流程以及遇到的问题/" class="archive-article-date">
+  	<time datetime="2017-05-12T06:32:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网上学习的Hexo+GitHub搭建私人博客。</p>
+<blockquote>
+<p>前期准备工作：安装Node.js和Git客户端；申请GitHub账号；创建Hexo相对应的仓库。</p>
+</blockquote>
+<p>下面为计算机上的操作（系统为Windows）：</p>
+<ul>
+<li>在计算机创建Hexo目录</li>
+<li><p>启动npm，进入创建的Hexo根目录，下载hexo</p>
+<p>  $ npm install -g hexo</p>
+</li>
+<li><p>初始化hexo</p>
+<p>  $ hexo init</p>
+</li>
+<li><p>生成项目(已生成查看文件变动)</p>
+<p>  $ hexo g (hexo generate)</p>
+</li>
+<li><p>本机启动服务预览（成功后可以在本地浏览器查看效果<a href="http://localhost:4000/）" target="_blank" rel="external">http://localhost:4000/）</a></p>
+<p>  $ hexo s (hexo server)</p>
+</li>
+</ul>
+<hr>
+<p>上面的步骤完成后，如果本地浏览器能成功预览效果，接下来就是将本地已经生成的项目提交到github上面</p>
+<ul>
+<li><p>修改 Hexo 根目录下的 _config.yml文件 里面的deploy 字段</p>
+<p>  type: git</p>
+<p>  repository: <a href="https://github.com/你的GitHub地址/仓库名.github.io.git" target="_blank" rel="external">https://github.com/你的GitHub地址/仓库名.github.io.git</a></p>
+<p>  branch: master</p>
+</li>
+<li><p>部署项目</p>
+<p>  $ hexo d (hexo deploy)</p>
+</li>
+</ul>
+<p>提交成功后，可以登录github查看项目提交结果，也可以在浏览器输入github上的仓库名称，若成功提交，则会弹出hexo的一个hello world页面。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/12/Hexo安装流程以及遇到的问题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-RecycleView初步使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -428,6 +519,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5"><font face="Consoles" colors=#00FF00 size=3>Android RecycleView CardView</font></a>
