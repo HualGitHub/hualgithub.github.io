@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://nba.hupu.com/2017/05/12/Hexo安装流程以及遇到的问题/index.html">
 <meta property="og:site_name" content="H的博客">
 <meta property="og:description" content="网上学习的Hexo+GitHub搭建私人博客。  前期准备工作：安装Node.js和Git客户端；申请GitHub账号；创建Hexo相对应的仓库。  下面为计算机上的操作（系统为Windows）：  在计算机创建Hexo目录 启动npm，进入创建的Hexo根目录，下载hexo   $ npm install -g hexo  初始化hexo   $ hexo init  生成项目(已生成查看文件变">
-<meta property="og:updated_time" content="2017-05-12T06:52:45.194Z">
+<meta property="og:updated_time" content="2017-05-12T08:18:35.261Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo安装流程以及遇到的问题">
 <meta name="twitter:description" content="网上学习的Hexo+GitHub搭建私人博客。  前期准备工作：安装Node.js和Git客户端；申请GitHub账号；创建Hexo相对应的仓库。  下面为计算机上的操作（系统为Windows）：  在计算机创建Hexo目录 启动npm，进入创建的Hexo根目录，下载hexo   $ npm install -g hexo  初始化hexo   $ hexo init  生成项目(已生成查看文件变">
@@ -211,6 +211,50 @@
 </li>
 </ul>
 <p>提交成功后，可以登录github查看项目提交结果，也可以在浏览器输入github上的仓库名称，若成功提交，则会弹出hexo的一个hello world页面。</p>
+<p>提交成功并且能正常打开blog之后，不需要急于去写文章，可以先给自己的blog设置一个主题，网上搜索并且下载替换原始主题。</p>
+<p>先下载主题（npm里面输入）</p>
+<blockquote>
+<p>git clone <a href="https://github.com/litten/hexo-theme-yilia.git" target="_blank" rel="external">https://github.com/litten/hexo-theme-yilia.git</a> themes/yilia</p>
+</blockquote>
+<p>然后修改创建的Hexo根目录下的 _config.yml文件</p>
+<blockquote>
+<p>theme： yilia</p>
+</blockquote>
+<p>然后先在本地启动服务查看替换效果</p>
+<blockquote>
+<p>hexo server</p>
+</blockquote>
+<p>成功切换主题后，重复生成项目和部署项目</p>
+<blockquote>
+<p>hexo g</p>
+<p>hexo d</p>
+</blockquote>
+<p>上面完成之后，可以在浏览器输入blog的网址（github仓库的名称）查看效果。</p>
+<hr>
+<p>上面的步骤做完以后，就可以开始写自己的文章了</p>
+<blockquote>
+<p>hexo new “文章名”</p>
+</blockquote>
+<p>Hexo使用的是markdown作为编辑语言。文章创建之后，需要稍微了解MD语言的语法，新的篇章就开启啦</p>
+<hr>
+<h4 id="以下是这中间遇到的一些问题总结"><a href="#以下是这中间遇到的一些问题总结" class="headerlink" title="以下是这中间遇到的一些问题总结"></a>以下是这中间遇到的一些问题总结</h4><ul>
+<li>hexo deploy</li>
+</ul>
+<blockquote>
+<p>使用npm提交报失败，最后提交使用的是git bash工具</p>
+</blockquote>
+<ul>
+<li>使用yilia这个主题，踩了不少坑</li>
+</ul>
+<blockquote>
+<p>首先就是自定义的一些东西的去除，基本在主题的_config.yml文件里面修改，还有一些动态生成的地方，需要去主题相关的css和js以及ejs文件里面修改（这个不同主题修改的地方不一样，就不详细说明了）。</p>
+</blockquote>
+<ul>
+<li>node版本的问题<blockquote>
+<p>在windows下，yilia这个主题需要添加的一个 hexo-generator-json-content插件类似的东西，要求node版本大于6.2，但是根据网上查找的做法，一直没有完成在windows下的node的升级，后续看要不要更换主题。</p>
+</blockquote>
+</li>
+</ul>
 
       
 
