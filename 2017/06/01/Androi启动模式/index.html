@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://nba.hupu.com">
   <title>Androi启动模式 | H的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="四种启动模式  从堆栈的角度记录一下四种启动模式的特点：framework层管理activity是通过task来做的，一个应用启动的时候，都是开启了一个进程，当activity在最前面的时候，就会到达onResume的生命周期阶段，这个时候activity可以说是加载到了这个task的栈中。  standard标准的启动模式，manifest里面不需要配置activity的launchMode，这">
+  <meta name="description" content="四种启动模式  从堆栈的角度记录一下四种启动模式的特点：framework层管理activity是通过task来做的，一个应用启动的时候，都是开启了一个进程，当activity在最前面的时候，就会到达onResume的生命周期阶段，这个时候activity可以说是加载到了这个task的栈中。">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Androi启动模式">
 <meta property="og:url" content="http://nba.hupu.com/2017/06/01/Androi启动模式/index.html">
 <meta property="og:site_name" content="H的博客">
-<meta property="og:description" content="四种启动模式  从堆栈的角度记录一下四种启动模式的特点：framework层管理activity是通过task来做的，一个应用启动的时候，都是开启了一个进程，当activity在最前面的时候，就会到达onResume的生命周期阶段，这个时候activity可以说是加载到了这个task的栈中。  standard标准的启动模式，manifest里面不需要配置activity的launchMode，这">
-<meta property="og:updated_time" content="2017-06-01T03:59:14.026Z">
+<meta property="og:description" content="四种启动模式  从堆栈的角度记录一下四种启动模式的特点：framework层管理activity是通过task来做的，一个应用启动的时候，都是开启了一个进程，当activity在最前面的时候，就会到达onResume的生命周期阶段，这个时候activity可以说是加载到了这个task的栈中。">
+<meta property="og:updated_time" content="2017-06-01T06:17:53.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Androi启动模式">
-<meta name="twitter:description" content="四种启动模式  从堆栈的角度记录一下四种启动模式的特点：framework层管理activity是通过task来做的，一个应用启动的时候，都是开启了一个进程，当activity在最前面的时候，就会到达onResume的生命周期阶段，这个时候activity可以说是加载到了这个task的栈中。  standard标准的启动模式，manifest里面不需要配置activity的launchMode，这">
+<meta name="twitter:description" content="四种启动模式  从堆栈的角度记录一下四种启动模式的特点：framework层管理activity是通过task来做的，一个应用启动的时候，都是开启了一个进程，当activity在最前面的时候，就会到达onResume的生命周期阶段，这个时候activity可以说是加载到了这个task的栈中。">
   
     <link rel="alternative" href="/atom.xml" title="H的博客" type="application/atom+xml">
   
@@ -182,6 +182,7 @@
 <blockquote>
 <p>从堆栈的角度记录一下四种启动模式的特点：framework层管理activity是通过task来做的，一个应用启动的时候，都是开启了一个进程，当activity在最前面的时候，就会到达onResume的生命周期阶段，这个时候activity可以说是加载到了这个task的栈中。</p>
 </blockquote>
+<a id="more"></a>
 <h3 id="standard"><a href="#standard" class="headerlink" title="standard"></a>standard</h3><p>标准的启动模式，manifest里面不需要配置activity的launchMode，这种模式下的activity都是在一个task栈中，并且遵循先进先出的原则，最上面的activity销毁时，前一个activity就顶到最前面显示。这个task栈中可以存在同一个activity的多个实例，只要每执行一次startActivity就会讲一个activity压入栈中。</p>
 <h3 id="singleTop"><a href="#singleTop" class="headerlink" title="singleTop"></a>singleTop</h3><p>manifest里面launchMode设置为singleTop，这种模式的activity创建了实例，当它处于栈顶的时候，就不会再次创建该activity的实例，如果不是处于栈顶的话，就会再次创建activity的实例。</p>
 <h3 id="singleTask"><a href="#singleTask" class="headerlink" title="singleTask"></a>singleTask</h3><p>manifest里面launchMode设置为singleTask，这种模式启动的activity，存在与另外一个task栈中，并且那个task栈中只有这个activity一个实例，如果前一个栈中已经存在了该activity的实例，则会将这个task中的所有activity全部清除。这中间有一个属性会影响到activity是否创建新的任务栈：taskAffinity。manifest里面的affinity默认都是以包名来标识的，如果为设置了singleTask的activity加上不同的taskAffinity，那么在启动这个activity的时候，会先判断是否存在这个task标识的栈，不存在，就将这个activity在新的task栈中创建唯一实例，如果有，就将activity实例创建在已有的栈中，并且把中间的activity全部清除。</p>
