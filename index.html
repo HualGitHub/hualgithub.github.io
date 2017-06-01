@@ -155,6 +155,187 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Androi启动模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/01/Androi启动模式/">Androi启动模式</a>
+    </h1>
+  
+
+        
+        <a href="/2017/06/01/Androi启动模式/" class="archive-article-date">
+  	<time datetime="2017-06-01T02:53:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>四种启动模式</p>
+<blockquote>
+<p>从堆栈的角度记录一下四种启动模式的特点：framework层管理activity是通过task来做的，一个应用启动的时候，都是开启了一个进程，当activity在最前面的时候，就会到达onResume的生命周期阶段，这个时候activity可以说是加载到了这个task的栈中。</p>
+</blockquote>
+<h3 id="standard"><a href="#standard" class="headerlink" title="standard"></a>standard</h3><p>标准的启动模式，manifest里面不需要配置activity的launchMode，这种模式下的activity都是在一个task栈中，并且遵循先进先出的原则，最上面的activity销毁时，前一个activity就顶到最前面显示。这个task栈中可以存在同一个activity的多个实例，只要每执行一次startActivity就会讲一个activity压入栈中。</p>
+<h3 id="singleTop"><a href="#singleTop" class="headerlink" title="singleTop"></a>singleTop</h3><p>manifest里面launchMode设置为singleTop，这种模式的activity创建了实例，当它处于栈顶的时候，就不会再次创建该activity的实例，如果不是处于栈顶的话，就会再次创建activity的实例。</p>
+<h3 id="singleTask"><a href="#singleTask" class="headerlink" title="singleTask"></a>singleTask</h3><p>manifest里面launchMode设置为singleTask，这种模式启动的activity，存在与另外一个task栈中，并且那个task栈中只有这个activity一个实例，如果前一个栈中已经存在了该activity的实例，则会将这个task中的所有activity全部清除。这中间有一个属性会影响到activity是否创建新的任务栈：taskAffinity。manifest里面的affinity默认都是以包名来标识的，如果为设置了singleTask的activity加上不同的taskAffinity，那么在启动这个activity的时候，会先判断是否存在这个task标识的栈，不存在，就将这个activity在新的task栈中创建唯一实例，如果有，就将activity实例创建在已有的栈中，并且把中间的activity全部清除。</p>
+<h3 id="singleInstance"><a href="#singleInstance" class="headerlink" title="singleInstance"></a>singleInstance</h3><p>manifest里面launchMode设置为singleInstance，这种模式启动的activity，在task栈中只会存在一个实例，并且这个实例是唯一的，即它会独占一个task栈。并且也是可以跨应用被使用的。即使类似singleTask模式的activity使用了taskAffinity属性也是会独占一个task栈。</p>
+<blockquote>
+<p>singleInstance和singleTask的activity在被另一个activity以startActivityForResult启动的时候，会因为不在同一个任务栈而回调失败，一旦启动了这个activity，前一个activity会马上回调onActivityResult，并且resultCode是RESULT_CANCELED</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/06/01/Androi启动模式/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-多线程及其性能优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/19/多线程及其性能优化/">多线程及其性能优化</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/19/多线程及其性能优化/" class="archive-article-date">
+  	<time datetime="2017-05-19T08:03:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>android实现多线程的几种方式：</p>
+<h3 id="Activity-runOnUiThread-Runnable"><a href="#Activity-runOnUiThread-Runnable" class="headerlink" title="Activity.runOnUiThread(Runnable)"></a>Activity.runOnUiThread(Runnable)</h3><p>是UI线程就马上执行，不是UI线程，就以发送消息的方式去做处理</p>
+<pre><code>/**
+ * Runs the specified action on the UI thread. If the current thread is the UI
+ * thread, then the action is executed immediately. If the current thread is
+ * not the UI thread, the action is posted to the event queue of the UI thread.
+ *
+ * @param action the action to run on the UI thread
+ */
+public final void runOnUiThread(Runnable action) {
+    if (Thread.currentThread() != mUiThread) {
+        mHandler.post(action);
+    } else {
+        action.run();
+    }
+}
+</code></pre><p>做一个消息的封装和发送</p>
+<pre><code>public boolean sendMessageAtTime(Message msg, long uptimeMillis) {
+    MessageQueue queue = mQueue;
+    if (queue == null) {
+        RuntimeException e = new RuntimeException(
+                this + &quot; sendMessageAtTime() called with no mQueue&quot;);
+        Log.w(&quot;Looper&quot;, e.getMessage(), e);
+        return false;
+    }
+    return enqueueMessage(queue, msg, uptimeMillis);
+}
+</code></pre><h3 id="View-post-Runnable-View-postDelay-Runnable-long"><a href="#View-post-Runnable-View-postDelay-Runnable-long" class="headerlink" title="View.post(Runnable) ;View.postDelay(Runnable , long)"></a>View.post(Runnable) ;View.postDelay(Runnable , long)</h3><p>内部通过AttachInfo里面的handler发送消息</p>
+<pre><code>public boolean post(Runnable action) {
+    final AttachInfo attachInfo = mAttachInfo;
+    if (attachInfo != null) {
+        return attachInfo.mHandler.post(action);
+    }
+    // Assume that post will succeed later
+    ViewRootImpl.getRunQueue().post(action);
+    return true;
+}
+</code></pre><p>handler里面的post方法</p>
+<pre><code> public final boolean post(Runnable r) {
+       return  sendMessageDelayed(getPostMessage(r), 0);
+}
+</code></pre><p>这个方法和postDelay方法一致了，间隔时间变成了0</p>
+<pre><code>public final boolean sendMessageDelayed(Message msg, long delayMillis) {
+    if (delayMillis &lt; 0) {
+        delayMillis = 0;
+    }
+    return sendMessageAtTime(msg, SystemClock.uptimeMillis() + delayMillis);
+}
+</code></pre><h3 id="Handler"><a href="#Handler" class="headerlink" title="Handler"></a>Handler</h3><pre><code>There are two main uses for a Handler:
+(1) to schedule messages and runnables to be executed as some point in the future
+调度一些消息或者可执行动作确保可以在某一刻能够执行
+(2) to enqueue an action to be performed on a different thread than your own.
+将一些执行队列放在不同线程中执行
+</code></pre><p>handler运行在主线程中间</p>
+<h3 id="AsyncTask"><a href="#AsyncTask" class="headerlink" title="AsyncTask"></a>AsyncTask</h3>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Android 多线程 性能优化</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/19/多线程及其性能优化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-Hexo安装流程以及遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -575,6 +756,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Android 多线程 性能优化</a>
               </li>
              
               <li class="article-tag-list-item">

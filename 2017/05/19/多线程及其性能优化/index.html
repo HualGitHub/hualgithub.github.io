@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://nba.hupu.com">
-  <title>随笔 | H的博客</title>
+  <title>多线程及其性能优化 | H的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="随笔">
-<meta property="og:url" content="http://nba.hupu.com/随笔/index.html">
+  <meta name="description" content="android实现多线程的几种方式： Activity.runOnUiThread(Runnable)是UI线程就马上执行，不是UI线程，就以发送消息的方式去做处理 /**  * Runs the specified action on the UI thread. If the current thread is the UI  * thread, then the action is exec">
+<meta name="keywords" content="Android 多线程 性能优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程及其性能优化">
+<meta property="og:url" content="http://nba.hupu.com/2017/05/19/多线程及其性能优化/index.html">
 <meta property="og:site_name" content="H的博客">
-<meta property="og:updated_time" content="2017-05-12T07:01:01.172Z">
+<meta property="og:description" content="android实现多线程的几种方式： Activity.runOnUiThread(Runnable)是UI线程就马上执行，不是UI线程，就以发送消息的方式去做处理 /**  * Runs the specified action on the UI thread. If the current thread is the UI  * thread, then the action is exec">
+<meta property="og:updated_time" content="2017-05-19T09:32:33.063Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="随笔">
+<meta name="twitter:title" content="多线程及其性能优化">
+<meta name="twitter:description" content="android实现多线程的几种方式： Activity.runOnUiThread(Runnable)是UI线程就马上执行，不是UI线程，就以发送消息的方式去做处理 /**  * Runs the specified action on the UI thread. If the current thread is the UI  * thread, then the action is exec">
   
     <link rel="alternative" href="/atom.xml" title="H的博客" type="application/atom+xml">
   
@@ -154,27 +158,81 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="page-undefined" class="article article-type-page " itemscope itemprop="blogPost">
+            <article id="post-多线程及其性能优化" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      随笔
+      多线程及其性能优化
     </h1>
   
 
         
-        <a href="/随笔/index.html" class="archive-article-date">
-  	<time datetime="2017-05-12T06:32:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-12</time>
+        <a href="/2017/05/19/多线程及其性能优化/" class="archive-article-date">
+  	<time datetime="2017-05-19T08:03:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>android实现多线程的几种方式：</p>
+<h3 id="Activity-runOnUiThread-Runnable"><a href="#Activity-runOnUiThread-Runnable" class="headerlink" title="Activity.runOnUiThread(Runnable)"></a>Activity.runOnUiThread(Runnable)</h3><p>是UI线程就马上执行，不是UI线程，就以发送消息的方式去做处理</p>
+<pre><code>/**
+ * Runs the specified action on the UI thread. If the current thread is the UI
+ * thread, then the action is executed immediately. If the current thread is
+ * not the UI thread, the action is posted to the event queue of the UI thread.
+ *
+ * @param action the action to run on the UI thread
+ */
+public final void runOnUiThread(Runnable action) {
+    if (Thread.currentThread() != mUiThread) {
+        mHandler.post(action);
+    } else {
+        action.run();
+    }
+}
+</code></pre><p>做一个消息的封装和发送</p>
+<pre><code>public boolean sendMessageAtTime(Message msg, long uptimeMillis) {
+    MessageQueue queue = mQueue;
+    if (queue == null) {
+        RuntimeException e = new RuntimeException(
+                this + &quot; sendMessageAtTime() called with no mQueue&quot;);
+        Log.w(&quot;Looper&quot;, e.getMessage(), e);
+        return false;
+    }
+    return enqueueMessage(queue, msg, uptimeMillis);
+}
+</code></pre><h3 id="View-post-Runnable-View-postDelay-Runnable-long"><a href="#View-post-Runnable-View-postDelay-Runnable-long" class="headerlink" title="View.post(Runnable) ;View.postDelay(Runnable , long)"></a>View.post(Runnable) ;View.postDelay(Runnable , long)</h3><p>内部通过AttachInfo里面的handler发送消息</p>
+<pre><code>public boolean post(Runnable action) {
+    final AttachInfo attachInfo = mAttachInfo;
+    if (attachInfo != null) {
+        return attachInfo.mHandler.post(action);
+    }
+    // Assume that post will succeed later
+    ViewRootImpl.getRunQueue().post(action);
+    return true;
+}
+</code></pre><p>handler里面的post方法</p>
+<pre><code> public final boolean post(Runnable r) {
+       return  sendMessageDelayed(getPostMessage(r), 0);
+}
+</code></pre><p>这个方法和postDelay方法一致了，间隔时间变成了0</p>
+<pre><code>public final boolean sendMessageDelayed(Message msg, long delayMillis) {
+    if (delayMillis &lt; 0) {
+        delayMillis = 0;
+    }
+    return sendMessageAtTime(msg, SystemClock.uptimeMillis() + delayMillis);
+}
+</code></pre><h3 id="Handler"><a href="#Handler" class="headerlink" title="Handler"></a>Handler</h3><pre><code>There are two main uses for a Handler:
+(1) to schedule messages and runnables to be executed as some point in the future
+调度一些消息或者可执行动作确保可以在某一刻能够执行
+(2) to enqueue an action to be performed on a different thread than your own.
+将一些执行队列放在不同线程中执行
+</code></pre><p>handler运行在主线程中间</p>
+<h3 id="AsyncTask"><a href="#AsyncTask" class="headerlink" title="AsyncTask"></a>AsyncTask</h3>
       
 
       
@@ -182,6 +240,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Android 多线程 性能优化</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -193,6 +262,25 @@
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2017/06/01/Androi启动模式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Androi启动模式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/12/Hexo安装流程以及遇到的问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hexo安装流程以及遇到的问题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 
 
@@ -226,7 +314,7 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
