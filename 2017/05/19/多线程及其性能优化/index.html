@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://nba.hupu.com/2017/05/19/多线程及其性能优化/index.html">
 <meta property="og:site_name" content="H的博客">
 <meta property="og:description" content="android实现多线程的几种方式： Activity.runOnUiThread(Runnable)是UI线程就马上执行，不是UI线程，就以发送消息的方式去做处理 /**  * Runs the specified action on the UI thread. If the current thread is the UI  * thread, then the action is exec">
-<meta property="og:updated_time" content="2017-05-19T09:32:33.063Z">
+<meta property="og:updated_time" content="2017-06-01T06:20:47.216Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程及其性能优化">
 <meta name="twitter:description" content="android实现多线程的几种方式： Activity.runOnUiThread(Runnable)是UI线程就马上执行，不是UI线程，就以发送消息的方式去做处理 /**  * Runs the specified action on the UI thread. If the current thread is the UI  * thread, then the action is exec">
@@ -194,7 +194,8 @@ public final void runOnUiThread(Runnable action) {
         action.run();
     }
 }
-</code></pre><p>做一个消息的封装和发送</p>
+</code></pre><a id="more"></a>
+<p>做一个消息的封装和发送</p>
 <pre><code>public boolean sendMessageAtTime(Message msg, long uptimeMillis) {
     MessageQueue queue = mQueue;
     if (queue == null) {
@@ -387,10 +388,6 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Android 多线程 性能优化</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">RecycleView</a>
               </li>
              
@@ -400,6 +397,10 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Android 多线程 性能优化</a>
               </li>
             
             <div class="clearfix"></div>
