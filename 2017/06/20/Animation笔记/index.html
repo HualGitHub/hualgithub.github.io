@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://nba.hupu.com/2017/06/20/Animation笔记/index.html">
 <meta property="og:site_name" content="H的博客">
 <meta property="og:description" content="最近项目迭代，UI出了一个交互，有点类似开源项目MaterialEditText那种效果，于是自己把android动画相关的给大致过了一遍，做个笔记。 Animationandroid的动画分位3种：  View Animation（组件动画） Property Animation （属性动画） Drawable Animation （帧动画）">
-<meta property="og:updated_time" content="2017-06-20T06:24:41.577Z">
+<meta property="og:updated_time" content="2017-06-20T06:26:15.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Animation笔记">
 <meta name="twitter:description" content="最近项目迭代，UI出了一个交互，有点类似开源项目MaterialEditText那种效果，于是自己把android动画相关的给大致过了一遍，做个笔记。 Animationandroid的动画分位3种：  View Animation（组件动画） Property Animation （属性动画） Drawable Animation （帧动画）">
@@ -246,7 +246,7 @@ PropertyValuesHolder holder4 = PropertyValuesHolder.ofFloat(&quot;pivotX&quot;, 
 </code></pre><p>中间用到的PropertyValuesHolder为一个辅助类，最后通过AnimatorSet的ofPropertyValuesHolder方法，将这些holder添加在一起。使用holder的时候，ObjectAnimator还提供了一些动画顺序的方法，类似after，before，with等，这个酌情使用。</p>
 <hr>
 <p>说到这次UI设计的组件，最后用的解决方案，就是通过属性动画来完成，因为属性动画有一个很棒的方法，就是reverse，在第一次animator结束的时候，停留在结束的位置，第二次可以从结束位置再次回到初始位置，完成了所需要的功能。</p>
-<p>#3.Drawable Animation<br>帧动画，一般在对话框的场景下会用到，每一帧都是一个drawable，在xml中，使用animation-list标签和item标签来实现。这个不做赘述。</p>
+<h1 id="3-Drawable-Animation"><a href="#3-Drawable-Animation" class="headerlink" title="3.Drawable Animation"></a>3.Drawable Animation</h1><p>帧动画，一般在对话框的场景下会用到，每一帧都是一个drawable，在xml中，使用animation-list标签和item标签来实现。这个不做赘述。</p>
 <p>#结言<br>主要是在做需求的时候，对所了解的一些知识做一个归纳总结，内容肯定不是非常全面，大概知道了框架，用的时候会有一个思路和概念。</p>
 <p>下面主要比较一下view动画和property动画的区别：</p>
 <ul>
@@ -402,11 +402,7 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">animation</a>
+                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -430,7 +426,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Hexo</a>
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">animation</a>
               </li>
             
             <div class="clearfix"></div>
