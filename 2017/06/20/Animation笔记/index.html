@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://nba.hupu.com">
-  <title>Archives: 2017 | H的博客</title>
+  <title>Animation笔记 | H的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="H的博客">
-<meta property="og:url" content="http://nba.hupu.com/archives/2017/index.html">
+  <meta name="description" content="最近项目迭代，UI出了一个交互，有点类似开源项目MaterialEditText那种效果，于是自己把android动画相关的给大致过了一遍，做个笔记。 Animationandroid的动画分位3种：  View Animation（组件动画） Property Animation （属性动画） Drawable Animation （帧动画）">
+<meta name="keywords" content="android,animation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Animation笔记">
+<meta property="og:url" content="http://nba.hupu.com/2017/06/20/Animation笔记/index.html">
 <meta property="og:site_name" content="H的博客">
+<meta property="og:description" content="最近项目迭代，UI出了一个交互，有点类似开源项目MaterialEditText那种效果，于是自己把android动画相关的给大致过了一遍，做个笔记。 Animationandroid的动画分位3种：  View Animation（组件动画） Property Animation （属性动画） Drawable Animation （帧动画）">
+<meta property="og:updated_time" content="2017-06-20T06:24:41.577Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="H的博客">
+<meta name="twitter:title" content="Animation笔记">
+<meta name="twitter:description" content="最近项目迭代，UI出了一个交互，有点类似开源项目MaterialEditText那种效果，于是自己把android动画相关的给大致过了一遍，做个笔记。 Animationandroid的动画分位3种：  View Animation（组件动画） Property Animation （属性动画） Drawable Animation （帧动画）">
   
     <link rel="alternative" href="/atom.xml" title="H的博客" type="application/atom+xml">
   
@@ -153,36 +158,112 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Animation笔记" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/20/Animation笔记/" class="archive-article-date">
-  	<time datetime="2017-06-20T05:17:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-20</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/20/Animation笔记/">Animation笔记</a>
+    <h1 class="article-title" itemprop="name">
+      Animation笔记
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/06/20/Animation笔记/" class="archive-article-date">
+  	<time datetime="2017-06-20T05:17:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近项目迭代，UI出了一个交互，有点类似开源项目<a href="https://github.com/rengwuxian/MaterialEditText" target="_blank" rel="external">MaterialEditText</a>那种效果，于是自己把android动画相关的给大致过了一遍，做个笔记。</p>
+<h3 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h3><p>android的动画分位3种：</p>
+<ul>
+<li>View Animation（组件动画）</li>
+<li>Property Animation （属性动画）</li>
+<li>Drawable Animation （帧动画）</li>
+</ul>
+<a id="more"></a>
+<h1 id="1-View-Animation"><a href="#1-View-Animation" class="headerlink" title="1.View Animation"></a>1.View Animation</h1><p>组件动画，也是最基本的动画，主要包括4种：</p>
+<ul>
+<li>alpha （渐变）</li>
+<li>scale （缩放）</li>
+<li>translate （平移）</li>
+<li>rotate （旋转）</li>
+</ul>
+<h3 id="View动画，主要实现方式有两种："><a href="#View动画，主要实现方式有两种：" class="headerlink" title="View动画，主要实现方式有两种："></a>View动画，主要实现方式有两种：</h3><blockquote>
+<p>一种是通过xml编写相关动画及其属性，在java代码中一般通过AnimationUtils导入动画，其他的一些方法则是将动画当成参数传入实现，例如activity的overridePendingTransition方法。另一种就是直接在java代码中通过相关动画的类创建对象设置属性来实现。</p>
+</blockquote>
+<p>下面简单例举一下每一种动画相关的属性（XML文件的形式，在java代码里面，基本都具有set方法）：</p>
+<h4 id="alpha"><a href="#alpha" class="headerlink" title="alpha"></a>alpha</h4><pre><code>android:fromAlpha=&quot;0.0&quot;  开始透明度
+android:toAlpha=&quot;1.0&quot;   结束透明度
+</code></pre><h4 id="scale"><a href="#scale" class="headerlink" title="scale"></a>scale</h4><pre><code>android:interpolator=&quot;@android:anim/accelerate_decelerate_interpolator&quot; 速率控制
+android:fromXScale=&quot;1.0&quot;  ——&gt; 初始x位置
+android:toXScale=&quot;1.4&quot; ——&gt; 结束x位置
+android:fromYScale=&quot;1.0&quot; ——&gt; 初始y位置
+android:toYScale=&quot;0.6&quot; ——&gt; 结束y位置
+android:pivotX=&quot;50%&quot; ——&gt; x方向上缩放位置
+android:pivotY=&quot;50%&quot; ——&gt; y方向上缩放位置
+android:fillAfter=&quot;false&quot; ——&gt; 结束后是否停留在结束位置
+</code></pre><h4 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h4><pre><code>android:fromXDelta=&quot;float&quot;   开始x位置
+android:toXDelta=&quot;float&quot;    结束x位置
+android:fromYDelta=&quot;float&quot;   开始y位置
+android:toYDelta=&quot;float&quot; 结束y位置
+</code></pre><h4 id="rotate"><a href="#rotate" class="headerlink" title="rotate"></a>rotate</h4><pre><code>android:fromDegrees=&quot;0&quot;  开始角度
+android:toDegrees=&quot;-45&quot;  结束角度（正为顺时针，负为逆时针）
+android:toYScale=&quot;0.0&quot;  结束y位置
+android:pivotX=&quot;50%&quot;  旋转x位置
+android:pivotY=&quot;50%&quot;  旋转y位置
+android:startOffset=&quot;700&quot;  start方法调用后的等待时间
+</code></pre><p>4种动画都具有的一些公共属性（不全，仅举例说明）</p>
+<pre><code>android:duration=&quot;500&quot; 动画周期
+android:repeatCount=&quot;-1&quot;  循环次数（-1代表无限循环）
+android:repeatMode=&quot;reverse&quot;  循环模式
+</code></pre><p>基本的view动画，也可以多个一起组合成为组合动画，在xml文件的形式为set标签，java代码里面通过AnimationSet来实现。无论是AlphaAnimation，ScaleAnimation，TranslateAnimation，RotateAnimation还是AnimationSet都是继承于Animation类。</p>
+<p>对于view动画的每个Animation类，都会提供相对应的animation listener，里面有三个主要回调方法，就是动画开始前，动画结束后，动画重复。</p>
+<h1 id="2-Property-Animation"><a href="#2-Property-Animation" class="headerlink" title="2.Property Animation"></a>2.Property Animation</h1><blockquote>
+<p>基本的view动画，具有一定的限制性，因为是view动画所以作用的对象是android的组件。在自定义的组件里面，有时会通过一个可变的对象来管理组件的属性，这个可变的对象，控制这这个自定义组件的动画，这种场景下简单的view动画是无法实现的。</p>
+</blockquote>
+<p>属性动画有以下三个相关类：</p>
+<ul>
+<li>Animator</li>
+<li>ObjectAnimator</li>
+<li>ValueAnimator</li>
+</ul>
+<h3 id="ValueAnimator"><a href="#ValueAnimator" class="headerlink" title="ValueAnimator"></a>ValueAnimator</h3><p>这个类是最主要的一个类，基本功能都实现了，继承于Animator类，被ObjectAnimator继承，主要功能就是在初始值到结束值之间做计算，做一个过渡。主要方法有ofFloat，ofInt，ofArgb，参数为一个集合。</p>
+<h3 id="ObjectAnimator"><a href="#ObjectAnimator" class="headerlink" title="ObjectAnimator"></a>ObjectAnimator</h3><p>这个类可以对任意对象的任意属性进行操作，也是最常用的一个类。比如其中一个方法ofFloat</p>
+<blockquote>
+<p>public static ObjectAnimator ofFloat(Object target, String propertyName, float… values)</p>
+</blockquote>
+<p>target为要操作的对象，property为属性名，后面的values同ValueAnimator的参数。</p>
+<p>说说这次用到的一些属性名称：</p>
+<pre><code>PropertyValuesHolder holder1 = PropertyValuesHolder.ofFloat(&quot;TranslationY&quot;, 0,-DensityUtil.dip2pX(mContext,23)); // 平移方向
+PropertyValuesHolder holder2 = PropertyValuesHolder.ofFloat(&quot;scaleX&quot;, 1.0f,0.7f); // X缩放方向
+PropertyValuesHolder holder3 = PropertyValuesHolder.ofFloat(&quot;scaleY&quot;, 1.0f,0.7f); // Y缩放方向
+PropertyValuesHolder holder4 = PropertyValuesHolder.ofFloat(&quot;pivotX&quot;, 1.0f,1.0f); // 缩放位置（前后都是1表示x坐标不变）
+</code></pre><p>中间用到的PropertyValuesHolder为一个辅助类，最后通过AnimatorSet的ofPropertyValuesHolder方法，将这些holder添加在一起。使用holder的时候，ObjectAnimator还提供了一些动画顺序的方法，类似after，before，with等，这个酌情使用。</p>
+<hr>
+<p>说到这次UI设计的组件，最后用的解决方案，就是通过属性动画来完成，因为属性动画有一个很棒的方法，就是reverse，在第一次animator结束的时候，停留在结束的位置，第二次可以从结束位置再次回到初始位置，完成了所需要的功能。</p>
+<p>#3.Drawable Animation<br>帧动画，一般在对话框的场景下会用到，每一帧都是一个drawable，在xml中，使用animation-list标签和item标签来实现。这个不做赘述。</p>
+<p>#结言<br>主要是在做需求的时候，对所了解的一些知识做一个归纳总结，内容肯定不是非常全面，大概知道了框架，用的时候会有一个思路和概念。</p>
+<p>下面主要比较一下view动画和property动画的区别：</p>
+<ul>
+<li>Property Animation是android3.0才加上的内容，对于API11以下的版本，不能使用，View Animation则通用</li>
+<li>Property Animation适用于所有对象，View Animation则是仅限于view</li>
+<li>Property Animation使用xml实现时，xml文件存放在animator文件夹下；View Animation使用xml实现时，xml文件存放在anim文件夹下</li>
+<li>体系结构不一样，属性动画主要是Animator类，组件动画主要是Animation动画</li>
+</ul>
+<p>最后记录一个开源库，<a href="https://github.com/JakeWharton/NineOldAndroids" target="_blank" rel="external">https://github.com/JakeWharton/NineOldAndroids</a> ,这个开源库主要是兼容android3.0以下版本也能使用Property Animation。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -198,187 +279,38 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/01/Androi启动模式/" class="archive-article-date">
-  	<time datetime="2017-06-01T02:53:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-01</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/01/Androi启动模式/">Androi启动模式</a>
-    </h1>
+  
+    <a href="/2017/06/01/Androi启动模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Androi启动模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/19/多线程及其性能优化/" class="archive-article-date">
-  	<time datetime="2017-05-19T08:03:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/19/多线程及其性能优化/">多线程及其性能优化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">性能优化</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/12/Hexo安装流程以及遇到的问题/" class="archive-article-date">
-  	<time datetime="2017-05-12T06:32:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/12/Hexo安装流程以及遇到的问题/">Hexo安装流程以及遇到的问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/11/RecycleView初步使用/" class="archive-article-date">
-  	<time datetime="2017-05-11T03:36:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/11/RecycleView初步使用/">RecycleView初步使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RecycleView</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CardView</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -401,8 +333,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
