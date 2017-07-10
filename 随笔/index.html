@@ -6,14 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://nba.hupu.com">
-  <title>Tag: animation | H的博客</title>
+  <title>随笔 | H的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="H的博客">
-<meta property="og:url" content="http://nba.hupu.com/tags/animation/index.html">
+  <meta name="description" content="LeetCode初尝387.First Unique Character in a String Given a string, find the first non-repeating character in it and return it’s index. If it doesn’t exist, return -1. example:s = &amp;quot;leetcode&amp;quot; re">
+<meta property="og:type" content="website">
+<meta property="og:title" content="随笔">
+<meta property="og:url" content="http://nba.hupu.com/随笔/index.html">
 <meta property="og:site_name" content="H的博客">
+<meta property="og:description" content="LeetCode初尝387.First Unique Character in a String Given a string, find the first non-repeating character in it and return it’s index. If it doesn’t exist, return -1. example:s = &amp;quot;leetcode&amp;quot; re">
+<meta property="og:updated_time" content="2017-07-10T07:55:21.478Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="H的博客">
+<meta name="twitter:title" content="随笔">
+<meta name="twitter:description" content="LeetCode初尝387.First Unique Character in a String Given a string, find the first non-repeating character in it and return it’s index. If it doesn’t exist, return -1. example:s = &amp;quot;leetcode&amp;quot; re">
   
     <link rel="alternative" href="/atom.xml" title="H的博客" type="application/atom+xml">
   
@@ -153,64 +157,138 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="page-undefined" class="article article-type-page " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/06/20/Animation笔记/" class="archive-article-date">
-  	<time datetime="2017-06-20T05:17:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-20</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/20/Animation笔记/">Animation笔记</a>
+    <h1 class="article-title" itemprop="name">
+      随笔
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">animation</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        <a href="/随笔/index.html" class="archive-article-date">
+  	<time datetime="2017-07-10T07:47:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="LeetCode初尝"><a href="#LeetCode初尝" class="headerlink" title="LeetCode初尝"></a>LeetCode初尝</h3><p>387.First Unique Character in a String</p>
+<p>Given a string, find the first non-repeating character in it and return it’s index. If it doesn’t exist, return -1.</p>
+<h4 id="example"><a href="#example" class="headerlink" title="example:"></a>example:</h4><pre><code>s = &quot;leetcode&quot;
+return 0.
+s = &quot;loveleetcode&quot;,
+return 2.
+</code></pre><p>Note: You may assume the string contain only lowercase letters.</p>
+<p>给定一个字符串，从左到右找出整个字符串第一个没有重复的字符，返回下标，题目提示仅考虑全是小写字母的情况。</p>
+<blockquote>
+<p>思路：因为只有小写字母组成的字符串，考虑用到数组配合下标的形式来记录字符出现的次数以及位置</p>
+</blockquote>
+<p>定义一个长度为26的整数数组，下标表示字符，值表示出现的次数，若值为1，就返回当前下标为问题所要求的下标</p>
+<a id="more"></a>
+<pre><code>public class Solution {
+    public int firstUniqChar(String s) {
+        int[] m = new int[26];
+        int length = s.length();
+        // 字符之间的减法是根据字符的ASCII码的值做减法
+        for(int i = 0; i &lt; length; i++){
+            // 记录字符串每个位置在数组中的出现次数
+            m[s.charAt(i) - &apos;a&apos;]++;
+        }
+        for(int i = 0; i &lt; length; i++){
+            if(m[s.charAt(i) - &apos;a&apos;] == 1)
+                return i;
+        }
+        return -1;
+    }
+}
+</code></pre><hr>
+<p>390.Elimination Game</p>
+<p>There is a list of sorted integers from 1 to n. Starting from left to right, remove the first number and every other number afterward until you reach the end of the list.</p>
+<p>Repeat the previous step again, but this time from right to left, remove the right most number and every other number from the remaining numbers.</p>
+<p>We keep repeating the steps again, alternating left to right and right to left, until a single number remains.</p>
+<p>Find the last number that remains starting with a list of length n.</p>
+<h4 id="example-1"><a href="#example-1" class="headerlink" title="example:"></a>example:</h4><p>Input:</p>
+<p>n = 9,</p>
+<p><u>1</u> 2 <u>3</u> 4 <u>5</u> 6 <u>7</u> 8 <u>9</u></p>
+<p>2 <u>4</u> 6 <u>8</u></p>
+<p><u>2</u> 6</p>
+<p>6</p>
+<p>Output:<br>6</p>
+<p>给定一个整数n，生成一串从1到n的整数，第一次从左到右开始移除奇数位元素，然后第二次从右到左移除上一次剩下的元素奇数位元素，以此类推，直到最后剩下一个元素的时候返回</p>
+<blockquote>
+<p>思路（参考）：不同于一般的二分查找，这是隔了一位的移除法。使用标记头部的方式，每次移除元素的时候都重新标记一下头部，移除到最后的时候，只剩下一个元素，head也刚好标记到这个元素，返回即可</p>
+</blockquote>
+<pre><code>public int elimationEliment(int n) {
+    int remaining = n;
+    boolean left = true;
+    int head = 1;
+    int step = 1;
+    while(remaining &gt; 1) {
+        // 从做到右清除或者剩余元素为奇数个时移动head
+        if(left || remaining % 2 ==1) {
+            head = head + step;
+        }
+        // 因为是隔位清除，所以step需要乘以2（见下面分析）
+        step = step * 2;
+        // 剩余的数的个数
+        remaining = remaining / 2;
+        // 清除开始方向
+        left = !left;
+    }
+}
+</code></pre><p>举个例子：n = 14</p>
+<blockquote>
+<p>1,2,3,4,5,6,7,8,9,10,11,12,13,14</p>
+</blockquote>
+<p>初始值：head=1,left=true,step=1,remaining=14;从左到右筛选后</p>
+<blockquote>
+<p>2,4,6,8,10,12,14</p>
+</blockquote>
+<p>第一次筛选后：head=2,left=false,step=2,remaining=7;从右到左再次筛选后</p>
+<blockquote>
+<p>4,8,12</p>
+</blockquote>
+<p>第二次筛选后：head=4,left=true,step=4,remaining=3;从做到右再次筛选后</p>
+<blockquote>
+<p>8</p>
+</blockquote>
+<p>第三次筛选后：head=8,left=false,step=8,remainging=1;此时remaining为1，返回的即筛选最后的结果。</p>
+<p>感觉白白学了多年编程了，随便找两道题就很启发思维，能保持个习惯就好，这是非技术文，是学习笔记，自己写的代码就不贴了，逻辑很硬板，没有这么灵活。</p>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
+
   
 
-    
+
+
+
+  
+  
+  
+
+  
+
+  
 
 
           </div>
@@ -235,7 +313,7 @@
 		isHome: false,
 		isPost: false,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: "/",
