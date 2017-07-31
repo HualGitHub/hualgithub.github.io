@@ -155,6 +155,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Android-RSA加密验证遇到的坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/28/Android-RSA加密验证遇到的坑/">Android RSA加密验证遇到的坑</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/28/Android-RSA加密验证遇到的坑/" class="archive-article-date">
+  	<time datetime="2017-07-28T08:43:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>首先我先感慨一下：Fuck Off！</p>
+</blockquote>
+<p>最近新app开发，接口调试，涉及密码相关的要求使用加密来保证数据安全性，公司后台选用的是RSA非对称加密，请求密钥的时候，后台返回的是编码后的公钥，中间踩了很多很多坑，最后问题解决后回来看，发现真的，路走的太弯了，费劲。</p>
+<h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><p>内部具体的加密方式还没有了解，仅从使用上来介绍一下加密过程，说一下自己简单的理解，也算是笔记</p>
+<blockquote>
+<p>首先是后台使用KeyPairGenerator来生成一对密钥对，分公钥和私钥，然后后台会存储私钥，公钥获取字节数组的值后通过Base64做一个encode编码转为字符串，开发者从后台获取的公钥就是这个字符串，拿到这个字符串之后，要先使用Base64做一个decode解码，然后通过KeyPairGenerator、KeyFactory、PublicKey这几个类的几步操作获得一个公钥的对象，通过Cipher对字符串进行加密，加密完成之后，要对加密的结果用Base64做一个encode编码的操作，获得的字符串即加密后的字符串，验证成功。</p>
+</blockquote>
+<h3 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h3><p>下面就要开始记录一下踩过的坑了</p>
+        
+          <a class="article-more-a" href="/2017/07/28/Android-RSA加密验证遇到的坑/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">RSA加密</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Base64</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">stackoverflow</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/28/Android-RSA加密验证遇到的坑/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
     <article id="post-Animation笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -457,85 +538,10 @@ public final void runOnUiThread(Runnable action) {
 
 
   
-    <article id="post-RecycleView初步使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/11/RecycleView初步使用/">RecycleView初步使用</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/11/RecycleView初步使用/" class="archive-article-date">
-  	<time datetime="2017-05-11T03:36:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>RecycleView继承自ViewGroup，是一堆控件的集合。</p>
-</blockquote>
-<p>因为继承自ViewGroup，所以它提供一些类来实现布局:</p>
-<ul>
-<li>LayoutManager 布局管理器</li>
-<li>ViewHolder 控件容器</li>
-<li>Adapter 控件适配器</li>
-</ul>
-<h3 id="1-LayoutManager"><a href="#1-LayoutManager" class="headerlink" title="1.LayoutManager"></a>1.LayoutManager</h3><p>分位三种：</p>
-<h6 id="GridLayoutManager-网格布局管理器"><a href="#GridLayoutManager-网格布局管理器" class="headerlink" title="GridLayoutManager 网格布局管理器"></a>GridLayoutManager 网格布局管理器</h6><h6 id="LinearLayoutManager-线性布局管理器"><a href="#LinearLayoutManager-线性布局管理器" class="headerlink" title="LinearLayoutManager 线性布局管理器"></a>LinearLayoutManager 线性布局管理器</h6><h6 id="StaggeredGridLayoutManager-流式布局管理器"><a href="#StaggeredGridLayoutManager-流式布局管理器" class="headerlink" title="StaggeredGridLayoutManager 流式布局管理器"></a>StaggeredGridLayoutManager 流式布局管理器</h6>
-        
-          <a class="article-more-a" href="/2017/05/11/RecycleView初步使用/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RecycleView</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CardView</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/05/11/RecycleView初步使用/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -632,11 +638,15 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">android</a>
+                <a href="javascript:void(0)" class="js-tag color1">RSA加密</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">animation</a>
+                <a href="javascript:void(0)" class="js-tag color2">Base64</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">stackoverflow</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -657,6 +667,14 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">CardView</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">android</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">animation</a>
               </li>
             
             <div class="clearfix"></div>

@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://nba.hupu.com">
-  <title>Archives: 2017/5 | H的博客</title>
+  <title>Android RSA加密验证遇到的坑 | H的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="H的博客">
-<meta property="og:url" content="http://nba.hupu.com/archives/2017/05/index.html">
+  <meta name="description" content="首先我先感慨一下：Fuck Off！  最近新app开发，接口调试，涉及密码相关的要求使用加密来保证数据安全性，公司后台选用的是RSA非对称加密，请求密钥的时候，后台返回的是编码后的公钥，中间踩了很多很多坑，最后问题解决后回来看，发现真的，路走的太弯了，费劲。 RSA内部具体的加密方式还没有了解，仅从使用上来介绍一下加密过程，说一下自己简单的理解，也算是笔记  首先是后台使用KeyPairGen">
+<meta name="keywords" content="Android,RSA加密,Base64,stackoverflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android RSA加密验证遇到的坑">
+<meta property="og:url" content="http://nba.hupu.com/2017/07/28/Android-RSA加密验证遇到的坑/index.html">
 <meta property="og:site_name" content="H的博客">
+<meta property="og:description" content="首先我先感慨一下：Fuck Off！  最近新app开发，接口调试，涉及密码相关的要求使用加密来保证数据安全性，公司后台选用的是RSA非对称加密，请求密钥的时候，后台返回的是编码后的公钥，中间踩了很多很多坑，最后问题解决后回来看，发现真的，路走的太弯了，费劲。 RSA内部具体的加密方式还没有了解，仅从使用上来介绍一下加密过程，说一下自己简单的理解，也算是笔记  首先是后台使用KeyPairGen">
+<meta property="og:updated_time" content="2017-07-31T02:02:16.951Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="H的博客">
+<meta name="twitter:title" content="Android RSA加密验证遇到的坑">
+<meta name="twitter:description" content="首先我先感慨一下：Fuck Off！  最近新app开发，接口调试，涉及密码相关的要求使用加密来保证数据安全性，公司后台选用的是RSA非对称加密，请求密钥的时候，后台返回的是编码后的公钥，中间踩了很多很多坑，最后问题解决后回来看，发现真的，路走的太弯了，费劲。 RSA内部具体的加密方式还没有了解，仅从使用上来介绍一下加密过程，说一下自己简单的理解，也算是笔记  首先是后台使用KeyPairGen">
   
     <link rel="alternative" href="/atom.xml" title="H的博客" type="application/atom+xml">
   
@@ -153,36 +158,81 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Android-RSA加密验证遇到的坑" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/19/多线程及其性能优化/" class="archive-article-date">
-  	<time datetime="2017-05-19T08:03:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-19</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/19/多线程及其性能优化/">多线程及其性能优化</a>
+    <h1 class="article-title" itemprop="name">
+      Android RSA加密验证遇到的坑
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/07/28/Android-RSA加密验证遇到的坑/" class="archive-article-date">
+  	<time datetime="2017-07-28T08:43:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>首先我先感慨一下：Fuck Off！</p>
+</blockquote>
+<p>最近新app开发，接口调试，涉及密码相关的要求使用加密来保证数据安全性，公司后台选用的是RSA非对称加密，请求密钥的时候，后台返回的是编码后的公钥，中间踩了很多很多坑，最后问题解决后回来看，发现真的，路走的太弯了，费劲。</p>
+<h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><p>内部具体的加密方式还没有了解，仅从使用上来介绍一下加密过程，说一下自己简单的理解，也算是笔记</p>
+<blockquote>
+<p>首先是后台使用KeyPairGenerator来生成一对密钥对，分公钥和私钥，然后后台会存储私钥，公钥获取字节数组的值后通过Base64做一个encode编码转为字符串，开发者从后台获取的公钥就是这个字符串，拿到这个字符串之后，要先使用Base64做一个decode解码，然后通过KeyPairGenerator、KeyFactory、PublicKey这几个类的几步操作获得一个公钥的对象，通过Cipher对字符串进行加密，加密完成之后，要对加密的结果用Base64做一个encode编码的操作，获得的字符串即加密后的字符串，验证成功。</p>
+</blockquote>
+<h3 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h3><p>下面就要开始记录一下踩过的坑了</p>
+<a id="more"></a>
+<h4 id="1-Base64"><a href="#1-Base64" class="headerlink" title="1.Base64"></a>1.Base64</h4><p>发现了一个很不幸的现象，就是所谓的Base64据踩坑所知，也是分几个：sun公司有自用的Base64，apache有Base64，android也自带Base64,因为不懂内部细节的加密过程和算法，所以也不太清楚这几种Base64编码的区别，公司后台用的是apache的，于是一开始思路就是网上找个apache的Base64的jar包拿来用，因为用的是AndroidStudio，后来一想去maven上面找找有没有相同的仓库，果然找到了，分别是eclipse的和studio两个的，考虑到后台eclipse开发的，就依赖了eclipse的那个仓库，Base64的类是找到了，按照理解的流程，用了那个仓库里面的Base64来解码从服务器获取的编码后的字符串，然后加密传给后台，这个时候报了一个nosuchmethodfound的方法，就是解码的方法未找到，这个问题是遇到的最大的坑，一开始看到这个异常，我是懵逼的，明明包导入了，方法名调用也没报错了，编译也通过了，就是跑起来的时候报错了，copy了一下异常信息，百度，还真有很多类似的问题和相关答案。解决方法包括：使用android自带的Base64来编解码；下载apache的jar包源码修改报名和类名，然后重新打出jar包（方法未试）；修改android自带Base64相关参数。</p>
+<blockquote>
+<p>结果证明，android在2.2版本的时候，每次使用Base64编解码都是使用自带的类，包括调用apache的那个jar包也会默认调用自带的类，而且实现的过程是一致的，可以正常使用</p>
+<p>修改报名的那个方法，在下载源码后，打出jar包的时候编译可能会遇到很多问题，我没有走这个路子</p>
+</blockquote>
+<h6 id="android自带Base64的类的参数及其含义（flags）"><a href="#android自带Base64的类的参数及其含义（flags）" class="headerlink" title="android自带Base64的类的参数及其含义（flags）"></a>android自带Base64的类的参数及其含义（flags）</h6><p>1.CRLF：这个参数看起来比较眼熟，它就是Win风格的换行符，意思就是使用CR LF这一对作为一行的结尾而不是Unix风格的LF</p>
+<p>2.DEFAULT：这个参数是默认，使用默认的方法来加密</p>
+<p>3.NO_PADDING：这个参数是略去加密字符串最后的“=”</p>
+<p>4.NO_WRAP：这个参数意思是略去所有的换行符（设置后CRLF就没用了）</p>
+<p>5.URL<em>SAFE：这个参数意思是加密时不使用对URL和文件名有特殊意义的字符来作为加密字符，具体就是以-和</em>取代+和/</p>
+<p>使用DEFAULT参数时，字符串长度过长会自动换行，一般android编解码都是使用NO_WRAP.</p>
+<h4 id="2-RSA加解密"><a href="#2-RSA加解密" class="headerlink" title="2.RSA加解密"></a>2.RSA加解密</h4><p>java自带了security这个包，就是起到加解密作用的。以下是这次问题的最终解决方案的流程：</p>
+<p>1.公钥转换</p>
+<pre><code>// Base64为android util包自带的，publicKeyString是服务器获取的公钥字符串，参数选择NO_WRAP
+byte[] keyByte = Base64.decode(publicKeyString.getBytes(), Base64.NO_WRAP);
+// 获取keyspec （java.security.spec.X509EncodedKeySpec）
+X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyByte);
+// 获取keyfactory （java.security.KeyFactory）
+KeyFactory keyFactory = KeyFactory.getInstance(&quot;RSA&quot;,&quot;BC&quot;);
+// 获取公钥 （java.security.PublicKey）
+PublicKey publicKey = keyFactory.generatePublic(keySpec);
+</code></pre><p>2.加密要加密的字符串</p>
+<pre><code>// 初始化加密类
+Cipher cipher = Cipher.getInstance(&quot;RSA/ECB/PKCS1Padding&quot;);
+cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+// 加密后获取字节数组 text为要加密的字符串
+byte[] enBytes = cipher.doFinal(text.getBytes());
+// 加密结果再做一次编码，获取的字符串作为密文传给服务器验证
+String result = Base64.encodeToString(enBytes, Base64.NO_WRAP);
+</code></pre><p>记录一下这中间涉及到的类</p>
+<blockquote>
+<p>X509EncodedKeySpec：以x.509为标准的编解码，与之对应的还有PKCS8EncodedKeySpec类，以pkcs8为标准编解码。</p>
+<p>KeyFactory：密钥工厂类，参数algorithm（”RSA”）为加密算法名称，provider(“BC”)安全提供者列表中有注册的提供者名称。</p>
+<p>PublicKey：公钥类，密钥工厂对象使用编解码标准对象生成密钥</p>
+<p>Cipher：加密类，获取实例的方法参数transformation是一个字符串，它描述了由指定输入产生输出所进行的操作或操作集合。参数transformation总是包含密码学算法名称，比如RSA，也可以在后面包含模式(ECB)和填充方式(PKCS1Padding)。getInstance工厂方法返回的对象没有进行初始化，因此在使用前必须进行初始化。初始化方法包括了方法模式，以及密钥，除了ENCRYPT_MODE和DECRYPT_MODE还包括WRAP_MODE（将一个Key封装成字节，可以用来进行安全传输）和UNWRAP_MODE（将前述已封装的密钥解开成Java.security.Key对象）。初始化完成以后，dofinal方法是做最后加解密操作。</p>
+</blockquote>
+<p>加解密相关的类以及参数，现在是记录的形式写在上面，中间踩过的小坑更是无数，发现对于这一块是完全没有了解过，网上的资料只能说千篇一律，都是自己生成的密钥对来验证加解密过程，很多文章都写的类似，说明也不详细。自己记录一下有助于理理思路，对于加解密的过程有个大致的了解。这个真的可以说是实际工作中遇到的有纪念意义的一个问题了，从无到有去学习未知领域，从迷茫无知的痛到最终解决的释怀。。想想还有点小激动呢！</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -192,113 +242,52 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">RSA加密</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">性能优化</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Base64</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">stackoverflow</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/12/Hexo安装流程以及遇到的问题/" class="archive-article-date">
-  	<time datetime="2017-05-12T06:32:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-12</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/12/Hexo安装流程以及遇到的问题/">Hexo安装流程以及遇到的问题</a>
-    </h1>
+  
+    <a href="/2017/06/20/Animation笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Animation笔记</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/05/11/RecycleView初步使用/" class="archive-article-date">
-  	<time datetime="2017-05-11T03:36:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/11/RecycleView初步使用/">RecycleView初步使用</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">RecycleView</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CardView</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -321,8 +310,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
